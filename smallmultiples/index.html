@@ -95,12 +95,12 @@
 
 			<div class="row">
 				<div class="col-sm-6">
-					<h3 class='mapTitle'>Healthcare Cost</h3><p>Average cost of healthcare.</p>
+					<h3 class='mapTitle'>Median Bill Cost</h3><p>Median cost of electric bill by Irish County.</p>
 					<div id="divMap3"></div>
 					<div id="divHist3"></div>
 				</div>
 				<div class="col-sm-6">
-					<h3 class='mapTitle'>Senior Citizens</h3><p>Percentage of population above 65 years old.</p>
+					<h3 class='mapTitle'>Metered Electric Consumption</h3><p>Median residential metered electric consumption by Irish County.</p>
 					<div id="divMap4"></div>
 					<div id="divHist4"></div>
 				</div>
@@ -116,7 +116,7 @@
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// TODO: Change the variables below to customize the small multiples interface for your data
-	var polygonJSONFile = 'data/out.geojson'
+	var polygonJSONFile = 'data/IEcounties.geojson'
 	// change the projection if needed *d3.geoAlbers()*
 	var projection = d3.geoAlbers();
 	var widthheightRatio = 0.4;
@@ -127,10 +127,10 @@
 	var legendX = 0.84, legendY = 0.5
 
 	// id attribute and the name attribute to be used in the tooltip
-	var idAttribute = 'FIPS', nameAttribute = 'County';
+	var idAttribute = 'OSM_ID', nameAttribute = 'NAME_TAG';
 
 	// Find the abbreviations of color names from https://colorbrewer2.org/
-	var colors =  colorbrewer.YlOrBr;
+	var colors =  colorbrewer.YlGnBu;
 
 	// Chart/map attributes (variables) and formats based on the divs defined above
 	// For attribute 1 (the same for all others), see the description of the parameters below.
@@ -139,14 +139,14 @@
 	// att1format: enter the d3.format string to display the variables in the format you like
 	// Check this link on how to specify the desired format:
 	// https://observablehq.com/@d3/d3-format
-	var att1 = 'lungDeathPerYear', att1alias = 'Lung Cancer Death Density per 10,000', att1format = '.0f',
-	att2 = 'pctSmokers', att2alias =  '% Smokers', att2format = '.0f',
-	att3 = 'healthCosts', att3alias = '$ Spent', att3format = '.0f',
-	att4 = 'numSr', att4alias = '% 65+', att4format = '.0f';
+	var att1 = 'VALUE_12', att1alias = 'Total Population', att1format = '.0f',
+	att2 = 'MedianKwh', att2alias =  'Median KwH', att2format = '.0f',
+	att3 = 'Label_1', att3alias = 'Median Gas Bill Cost', att3format = '.0f',
+	att4 = 'Label', att4alias = 'GwH of Electric Consumption', att4format = '.0f';
 
   // enter below all variables that should be recalculated. The order of attributes should match with
 	// the list of multiply and divide by values
-  var attributesToBeNormalized = [att1, att4];
+  // var attributesToBeNormalized = [att1, att4];
 	// If you would like to multiple the variables
 	// with a constant value enter them in multiplyBy array. If there is no need for multiplication,
 	// simply enter 1 for each value in multiplyBy.
@@ -154,12 +154,12 @@
 	// Enter the attribute name that you want to normalize (divide by).
 	// If you want to only multiply an attribute but not divide by another attribute
 	// then simply put null as the attribute name in the same order of the attribute.
-	var divideBy = ['Population', 'Population'];
+	// var divideBy = ['Population', 'Population'];
 	// if your variables are not raw counts and they are already normalized, comment out above, and
 	//uncomment below:
-	// var attributesToBeNormalized = [];
-	// var multiplyBy = [];
-	// var divideBy = [];
+	var attributesToBeNormalized = [];
+	var multiplyBy = [];
+	var divideBy = [];
 
 	//DO NOT CHANGE ANYTHING BELOW THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -349,6 +349,7 @@
 						var map = panel.selectAll('.path')
 						.data(polygons.features)
 						.enter().append('g');
+
 						map.append('path')
 						.attr("class", function(e) { return classPolygon(e, d.map); })
 						.on('mouseover', function(e) { return mouseOver2(e, dependent); })
@@ -429,8 +430,9 @@
 						// map tooltip
 						d3.select(tip)
 						.style('display', null)
-						.html("<p><b>" + name + " "+ nameAttribute + "</b><br/>" + d.var +
-						": " + d3.format(d.form)(polygon.properties[d.var]) + "</p>");
+						.html("<p><b>" + name + "</b><br/>" + d3.format(d.form)(polygon.properties[d.var]) + "</p>");
+						// .html("<p><b>" + name + " "+ nameAttribute + "</b><br/>" + d.var +
+						// ": " + d3.format(d.form)(polygon.properties[d.var]) + "</p>");
 					});
 				}
 
