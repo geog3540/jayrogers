@@ -116,9 +116,9 @@
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// TODO: Change the variables below to customize the small multiples interface for your data
-	var polygonJSONFile = 'data/counties1.geojson'
+	var polygonJSONFile = 'data/thisone2.geojson'
 	// change the projection if needed *d3.geoAlbers()*
-	var projection = d3.geoAlbers()
+	var projection = d3.geoTransverseMercator()
 	var widthheightRatio = 0.4;
 	// Relative placement of legend that ranges between 0 and 1.
 	// 0 is the start, whereas 1 i the end of each panel.
@@ -127,7 +127,7 @@
 	var legendX = 0.84, legendY = 0.5
 
 	// id attribute and the name attribute to be used in the tooltip
-	var idAttribute = 'OSM_ID', nameAttribute = 'NAME_TAG';
+	var idAttribute = 'obj_lower', nameAttribute = 'name_lower';
 
 	// Find the abbreviations of color names from https://colorbrewer2.org/
 	var colors =  colorbrewer.YlGnBu;
@@ -139,10 +139,10 @@
 	// att1format: enter the d3.format string to display the variables in the format you like
 	// Check this link on how to specify the desired format:
 	// https://observablehq.com/@d3/d3-format
-	var att1 = 'population', att1alias = 'total population', att1format = '.0f',
-	att2 = 'mediankwh', att2alias =  'median kwh', att2format = '.0f',
-	att3 = 'euros', att3alias = 'median gas bill cost', att3format = '.0f',
-	att4 = 'gwh', att4alias = 'gwh of electric consumption', att4format = '.0f';
+	var att1 = 'population', att1alias = 'Total Population', att1format = '.0f',
+	att2 = 'mediankwh', att2alias =  'Median KwH', att2format = '.0f',
+	att3 = 'euros', att3alias = 'Median Gas Bill Cost', att3format = '.0f',
+	att4 = 'gwh', att4alias = 'GwH of Electric Consumption', att4format = '.0f';
 
   // enter below all variables that should be recalculated. The order of attributes should match with
 	// the list of multiply and divide by values
@@ -157,9 +157,9 @@
 	// var divideBy = ['Population', 'Population'];
 	// if your variables are not raw counts and they are already normalized, comment out above, and
 	//uncomment below:
-	// var attributesToBeNormalized = [];
-	// var multiplyBy = [];
-	// var divideBy = [];
+	var attributesToBeNormalized = [];
+	var multiplyBy = [];
+	var divideBy = [];
 
 	//DO NOT CHANGE ANYTHING BELOW THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,17 +238,12 @@
 
 		//this is where you read the json polygon data
 		d3.json(polygonJSONFile).then(function(data) {
- 		 console.log(data); // Check that data is loaded correctly
- 				 // ...
-			});
-
 			// set up the projection
 			var polygons = data;
 			var proj = d3.geoPath().pointRadius(2);
 			// TODO: change the projection details here below - including specific parameters such as rotation, extent, etc.
 			// proj.projection(projection.fitSize([width, height], polygons));
 			 proj.projection(projection.center([-5,54]).fitExtent([[20, 20], [width,height]], polygons).scale(5000));
-			console.log(proj(polygons.features[0])); // Check that projection is working correctly
 
 
 
