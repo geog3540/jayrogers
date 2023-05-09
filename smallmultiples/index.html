@@ -118,7 +118,7 @@
 	// TODO: Change the variables below to customize the small multiples interface for your data
 	var polygonJSONFile = 'data/IEcounties_2.geojson'
 	// change the projection if needed *d3.geoAlbers()*
-	var projection = d3.geoAlbers()
+	var projection = d3.geoTransverseMercator()
 	var widthheightRatio = 0.4;
 	// Relative placement of legend that ranges between 0 and 1.
 	// 0 is the start, whereas 1 i the end of each panel.
@@ -242,7 +242,10 @@
 			var polygons = data;
 			var proj = d3.geoPath().pointRadius(2);
 			// TODO: change the projection details here below - including specific parameters such as rotation, extent, etc.
-			proj.projection(projection.fitSize([width, height], polygons));
+			// proj.projection(projection.fitSize([width, height], polygons));
+			 proj.projection(projection.center([-5,54]).fitExtent([[20, 20], [width,height]], polygons).scale(5000));
+
+
 
 			////////////////////////////////////////////////////
 			// Normalize based multiplyby and divideby values
