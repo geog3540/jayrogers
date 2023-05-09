@@ -139,10 +139,10 @@
 	// att1format: enter the d3.format string to display the variables in the format you like
 	// Check this link on how to specify the desired format:
 	// https://observablehq.com/@d3/d3-format
-	var att1 = 'population', att1alias = 'Total Population', att1format = '.0f',
-	att2 = 'mediankwh', att2alias =  'Median KwH', att2format = '.0f',
-	att3 = 'euros', att3alias = 'Median Gas Bill Cost', att3format = '.0f',
-	att4 = 'gwh', att4alias = 'GwH of Electric Consumption', att4format = '.0f';
+	var att1 = 'population', att1alias = 'total population', att1format = '.2f',
+	att2 = 'mediankwh', att2alias =  'median kwh', att2format = '.2f',
+	att3 = 'euros', att3alias = 'median gas bill cost', att3format = '.2f',
+	att4 = 'gwh', att4alias = 'gwh of electric consumption', att4format = '.2f';
 
   // enter below all variables that should be recalculated. The order of attributes should match with
 	// the list of multiply and divide by values
@@ -157,9 +157,9 @@
 	// var divideBy = ['Population', 'Population'];
 	// if your variables are not raw counts and they are already normalized, comment out above, and
 	//uncomment below:
-	var attributesToBeNormalized = [];
-	var multiplyBy = [];
-	var divideBy = [];
+	// var attributesToBeNormalized = [];
+	// var multiplyBy = [];
+	// var divideBy = [];
 
 	//DO NOT CHANGE ANYTHING BELOW THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,15 +381,15 @@
 					}); // end for each
 				});
 
-				function recalculateAttribute(attribute, multiplyby, divideby) {
-					// Function to catch errors when normalizing an attribute
-					// console.log(p, n);
-					if (!+divideby) {
-						return null;
-					} else {
-						return ((+multiplyby) * (+attribute)) / +divideby;
-					}
-				}
+				// function recalculateAttribute(attribute, multiplyby, divideby) {
+				// 	// Function to catch errors when normalizing an attribute
+				// 	// console.log(p, n);
+				// 	if (!+divideby) {
+				// 		return null;
+				// 	} else {
+				// 		return ((+multiplyby) * (+attribute)) / +divideby;
+				// 	}
+				// }
 
 				function classPolygon(polygon, map) {
 					// Function to create the correct CSS style name for each polygon.
