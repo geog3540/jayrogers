@@ -238,12 +238,17 @@
 
 		//this is where you read the json polygon data
 		d3.json(polygonJSONFile).then(function(data) {
+ 		 console.log(data); // Check that data is loaded correctly
+ 				 // ...
+			});
+
 			// set up the projection
 			var polygons = data;
 			var proj = d3.geoPath().pointRadius(2);
 			// TODO: change the projection details here below - including specific parameters such as rotation, extent, etc.
 			// proj.projection(projection.fitSize([width, height], polygons));
 			 proj.projection(projection.center([-5,54]).fitExtent([[20, 20], [width,height]], polygons).scale(5000));
+			console.log(proj(polygons.features[0])); // Check that projection is working correctly
 
 
 
